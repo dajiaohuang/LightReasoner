@@ -244,19 +244,6 @@ python LightR_sampling.py --max_questions 1000
 
 
 
-您可以在 LRsamples 目录下的 zip 文件中找到以下预收集的 LightReasoner 采样数据集：
-
-LR_Qwen7_gsm8k — 适用于 Qwen2.5-Math-7B
-
-LR_ds1.5_gsm8k — 适用于 DeepSeek-R1-Distill-Qwen-1.5B
-
-LR_Qwen1.5_gsm8k — 适用于 Qwen2.5-Math-1.5B
-
-我们提供了两个版本，一个使用 Torch 3.1 采样，另一个使用 Torch 3.8 采样，因为我们发现采样结果（即模型生成的输出）在不同 Torch 版本间可能略有不同。
-
-性能波动很小 —— 通常在 2–3% 以内，较新的 Torch 版本通常表现稍好。
-
-这些数据集使得直接复现我们的结果容易得多—— 无需额外采样！✨
 
 
 ---
