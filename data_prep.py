@@ -38,6 +38,19 @@ from datasets import load_dataset
 import json
 from tqdm import tqdm
 
+
+def _format_math_example(example, subject):
+    """Preserve source difficulty/type while adding the selected subject config."""
+    return {
+        "id": example["problem"],
+        "problem": example["problem"],
+        "solution": example["solution"],
+        "level": example["level"],
+        "type": example["type"],
+        "subject": subject,
+    }
+
+
 # Subjects to load
 subjects = [
     "algebra",
@@ -58,22 +71,12 @@ for subject in subjects:
     print(f"🔵 Loading subject: {subject}")
     dataset = load_dataset("EleutherAI/hendrycks_math", subject)
     
-    # Add subject field manually, since they don't have it
+    # The selected config is the subject; preserve the dataset's level and type.
     for ex in tqdm(dataset["train"], desc=f"Processing train split ({subject})"):
-        train_examples.append({
-            "id": ex["problem"],  # use problem as unique ID
-            "problem": ex["problem"],
-            "solution": ex["solution"],
-            "level": subject  # mark where it comes from
-        })
-        
+        train_examples.append(_format_math_example(ex, subject))
+
     for ex in tqdm(dataset["test"], desc=f"Processing test split ({subject})"):
-        test_examples.append({
-            "id": ex["problem"],
-            "problem": ex["problem"],
-            "solution": ex["solution"],
-            "level": subject
-        })
+        test_examples.append(_format_math_example(ex, subject))
 
 # === Save Training Set ===
 with open("math_train.jsonl", "w", encoding="utf-8") as f_train:
