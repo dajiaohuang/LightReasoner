@@ -39,7 +39,7 @@ def write_improved_comparisons(base_data, fine_tuned_data, output_path):
                 unmatched_count += 1
                 continue
 
-            base_score = base_entry.get("score", [False])[0]
+            base_score = base_entry["score"][0]
             ft_score = ft_entry["score"][0]
 
             if not base_score and ft_score:
