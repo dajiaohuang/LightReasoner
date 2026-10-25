@@ -71,9 +71,7 @@ if os.path.exists(output_path):
             try:
                 record = json.loads(line)
                 prompt_id = record["prompt_id"]
-            except (json.JSONDecodeError, KeyError, TypeError):
-                continue
-            if prompt_id not in prompt_ids:
+            except json.JSONDecodeError:
                 continue
             sampled_dataset.append(record)
             output_sample_counts[prompt_id] = output_sample_counts.get(prompt_id, 0) + 1
@@ -85,7 +83,7 @@ if os.path.exists(checkpoint_path):
             try:
                 record = json.loads(line)
                 checkpoint_sample_counts[record["prompt_id"]] = int(record["num_samples"])
-            except (json.JSONDecodeError, KeyError, TypeError, ValueError):
+            except json.JSONDecodeError:
                 continue
 
 processed_ids = set()
